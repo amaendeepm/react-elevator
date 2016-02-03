@@ -3,38 +3,36 @@
   "version": "0.0.1",
   "description": "TDD of Elevator using React",
   "main": "index.js",
-  
   "scripts": {
     "test": "jest"
   },
-  
-  "jest":  {
-  	"scriptPreprocessor": "./preprocessor.js",
-  	"testPathIgnorePatterns": [ "/node_modules/"]
+  "jest": {
+    "scriptPreprocessor": "./preprocessor.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "unmockedModulePathPatterns": [
+      "/node_modules/react",
+      "/node_modules/fbjs"
+    ]
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amaendeepm/react-elevator.git"
   },
-  
   "author": "Amandeep Midha",
-  
   "license": "ISC",
-  
   "bugs": {
     "url": "https://github.com/amaendeepm/react-elevator/issues"
   },
-  
   "homepage": "https://github.com/amaendeepm/react-elevator#readme",
-  
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "jest-cli": "^0.8.2",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "react-tools": "^0.13.3"
   },
-  
   "devDependencies": {
     "jest-cli": "^0.8.2"
   }

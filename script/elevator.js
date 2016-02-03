@@ -15,7 +15,7 @@ var ElevatorControl = React.createClass({
 
 var ElevatorFloorIndicator = React.createClass({
   render : function(){
-    return <div>Floor: {this.props.localCounter}</div>
+    return <div>Floor:<label>{this.props.localCounter}</label></div>
   }
 })
 
