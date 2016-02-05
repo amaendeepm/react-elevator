@@ -22,8 +22,15 @@ var ElevatorFloorIndicator = React.createClass({
 
 var Elevator = React.createClass({
 
-  changeDirection : function() { },
-
+  changeDirection : function() {
+	  if(this.state.direction === 'UP') {
+	  	this.state.direction = 'DN';
+	  }
+	  else if (this.state.direction === 'DN') {
+	  	this.state.direction = 'UP';
+	  }
+	  this.forceUpdate();
+	  },
 
   setFloorList : function() {   },
 
