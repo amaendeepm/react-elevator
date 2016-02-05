@@ -7,7 +7,7 @@ var ElevatorControl = React.createClass({
   render : function(){
     return(
       <div id="elevator">
-        <button onClick ={this.props.localHandleClick}> Direction {this.props.localCounter}  </button>
+        <button onClick ={this.props.localHandleClick}>Direction UP</button>
       </div>
     );
   }
