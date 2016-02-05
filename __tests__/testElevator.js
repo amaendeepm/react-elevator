@@ -1,23 +1,25 @@
 jest.dontMock('../script/elevator.js');
 
 describe('ElevatorTest', function() {
-  it('checks initial elevator rendered with direction UP', function() {
-    	var React = require('react/addons');
-    	var TestUtils = React.addons.TestUtils; // Yet to grasp it
 
-    	var Elevator = require('../script/elevator.js');
-    	var otis = TestUtils.renderIntoDocument(<Elevator/>);
-		var floorChk = TestUtils.findRenderedDOMComponentWithTag(otis, 'button');
+var otisElevator, TestUtils;
+
+  beforeEach(function() {
+	    var React = require('react/addons');
+		var Elevator = require('../script/elevator.js');
+		TestUtils = React.addons.TestUtils;
+    	otisElevator = TestUtils.renderIntoDocument(<Elevator/>);
+  });
+
+  it('checks initial elevator rendered with direction UP', function() {
+
+		var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
     	expect(floorChk.getDOMNode().textContent).toEqual('Direction UP');
 	});
 
-	it('checks toggling of elevator direction UP/DN', function() {
-	    	var React = require('react/addons');
-	    	var TestUtils = React.addons.TestUtils; // Yet to grasp it
+   it('checks toggling of elevator direction UP/DN', function() {
 
-	    	var Elevator = require('../script/elevator.js');
-	    	var otis = TestUtils.renderIntoDocument(<Elevator/>);
-			var floorChk = TestUtils.findRenderedDOMComponentWithTag(otis, 'button');
+			var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
 
 			TestUtils.Simulate.click(floorChk);
 			expect(floorChk.getDOMNode().textContent).toEqual('Direction DN');
