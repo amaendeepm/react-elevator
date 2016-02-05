@@ -7,7 +7,7 @@ var ElevatorControl = React.createClass({
   render : function(){
     return(
       <div id="elevator">
-        <button onClick ={this.props.localHandleClick}>Direction UP</button>
+        <button onClick ={this.props.localHandleClick}>Direction {this.props.localDir}</button>
       </div>
     );
   }
@@ -37,7 +37,7 @@ var Elevator = React.createClass({
 
 
   getInitialState : function(){
-    return { floor: 0 };
+    return { floor: 0, direction: 'UP' };
   },
 
   handleUp : function(){
@@ -52,7 +52,7 @@ var Elevator = React.createClass({
     return(
     <div>
       <label> Elevator </label>
-      <ElevatorControl localHandleClick={this.changeDirection} />
+      <ElevatorControl localHandleClick={this.changeDirection} localDir={this.state.direction}/>
       <ElevatorFloorIndicator localCounter={this.state.floor}/>
     </div>
     )
