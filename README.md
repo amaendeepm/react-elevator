@@ -1,4 +1,4 @@
 # react-elevator
 
-run npm install
-run npm test
+## npm install
+## npm test
