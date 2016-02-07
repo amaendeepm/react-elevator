@@ -1,3 +1,8 @@
+'use strict';
+
+var React = require('react/addons');
+var $ = require ('jquery');
+
 var ElevatorDirectionControl = React.createClass({
 
   render : function(){
@@ -14,18 +19,12 @@ var ElevatorFloorSelector = React.createClass({
     componentDidMount: function() {
         //alert('1');
         var $selectContainer = $(this.refs.selectContainer.getDOMNode());
-        var $select = $('<select/>');//.prop('onChange',{this.onChange});
+        var $select = $('<select/>');//.prop('change',{this.props.onChange});
 
         var html = '';
           for (var i = 0, len = this.props.localFloorList.length; i < len; ++i) {
             html += '<option value="' + this.props.localFloorList[i] + '">' + this.props.localFloorList[i] + '</option>';
           }
-        //$select.change = {this.onChange};
-
-        $select.change(function(evt) {
-          alert('came here' + evt);
-          this.props.onChange();
-        });
         $select.append(html);
         $selectContainer.append($select);
     },

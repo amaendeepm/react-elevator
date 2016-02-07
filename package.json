@@ -29,6 +29,7 @@
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "jest-cli": "^0.8.2",
+    "jquery": "^2.2.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-tools": "^0.13.3"
