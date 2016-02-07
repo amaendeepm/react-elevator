@@ -3,7 +3,7 @@ var ElevatorDirectionControl = React.createClass({
   render : function(){
     return(
       <div id="directionToggle">
-        <button onClick ={this.props.localHandleClick}> {this.props.text} {this.props.localDir}</button>
+        <button onClick ={this.props.localHandleClick}>Direction {this.props.localDir}</button>
       </div>
     );
   }
@@ -96,7 +96,7 @@ var Elevator = React.createClass({
     return(
     <div>
       <label> --Elevator-- </label>
-      <ElevatorDirectionControl text="Direction" localHandleClick={this.changeDirection} localDir={this.state.direction}/>
+      <ElevatorDirectionControl localHandleClick={this.changeDirection} localDir={this.state.direction}/>
       <ElevatorFloorIndicator localCounter={this.state.floor}/>
       <ElevatorFloorSelector text="Pick Floor" onChange={this.setFloor} localSelected={this.state.floor} localFloorList={this.state.floorList}/>
     </div>
@@ -106,4 +106,5 @@ var Elevator = React.createClass({
 
 module.exports = ElevatorDirectionControl;
 module.exports = ElevatorFloorIndicator;
+module.exports = ElevatorFloorSelector;
 module.exports = Elevator;
