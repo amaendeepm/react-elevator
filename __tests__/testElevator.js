@@ -17,7 +17,7 @@ var otisElevator, TestUtils;
     	expect(floorChk.getDOMNode().textContent).toEqual('Direction UP');
 	});
 
-   it('checks toggling of elevator direction UP/DN', function() {
+   it('Can change direction', function() {
 
 			var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
 
@@ -28,5 +28,27 @@ var otisElevator, TestUtils;
 			expect(floorChk.getDOMNode().textContent).toEqual('Direction UP');
 
 	});
+
+	it('Can accept a floor number', function() {
+
+	});
+
+	it('Can move to that floor', function() {
+
+	});
+
+	it('Can mantain a list of floor numbers', function() {
+
+	});
+
+	it('Can move through the floors', function() {
+
+	});
+
+	it('Can reverse direction when it reaches the top etc.', function() {
+
+	});
+
+
 
 });
