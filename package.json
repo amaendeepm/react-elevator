@@ -2,9 +2,12 @@
   "name": "react-elevator",
   "version": "0.0.1",
   "description": "TDD of Elevator using React",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "jest"
+	"test": "jest",
+	"start": "npm run serve | npm run dev",
+	"serve": "./node_modules/.bin/http-server -p 8080",
+	"dev": "webpack-dev-server --progress --colors --port 8090"    
   },
   "jest": {
     "scriptPreprocessor": "./preprocessor.js",
@@ -42,7 +45,10 @@
   },
   "devDependencies": {
     "html-webpack-plugin": "^2.8.1",
+    "http-server": "^0.8.5",
     "jest-cli": "^0.8.2",
-    "webpack": "^1.12.13"
+    "jsx-loader": "^0.13.2",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
   }
 }
