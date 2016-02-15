@@ -1,4 +1,4 @@
-jest.dontMock('../script/elevator.js');
+jest.dontMock('../script/elevator.jsx');
 
 describe('ElevatorTest', function() {
 
@@ -6,7 +6,7 @@ var React, Elevator, otisElevator,TestUtils, TestUtilsAddOns;
 
   beforeEach(function() {
 	    React = require('react/addons');
-		Elevator = require('../script/elevator.js');
+		Elevator = require('../script/elevator.jsx');
 		TestUtils = require('react-addons-test-utils');
 		TestUtilsAddOns = require('react-testutils-additions');
     	otisElevator = TestUtils.renderIntoDocument(<Elevator/>);
