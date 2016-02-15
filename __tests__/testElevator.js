@@ -12,50 +12,35 @@ var React, Elevator, otisElevator,TestUtils, TestUtilsAddOns;
     	otisElevator = TestUtils.renderIntoDocument(<Elevator/>);
   });
 
-
-
   it('checks initial elevator rendered with direction', function() {
 	  	//Check if sub-component toggle direction button is rendered
 		var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
-    	expect(floorChk.getDOMNode().textContent).toEqual('Toggle Direction');
+    	expect(floorChk.getDOMNode().textContent).toEqual('Toggle Direction (UP)');
 	});
 
    it('Can change direction', function() {
 
-			var elevator = TestUtilsAddOns.renderIntoDocument(<Elevator/>);
-			var dirLabel = TestUtilsAddOns.findRenderedDOMComponentWithId(elevator, "elev-direction").htmlFor;
+		var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
+    	expect(floorChk.getDOMNode().textContent).toEqual('Toggle Direction (UP)');
 
-			console.log('**************' + dirLabel);
-			var floorChk = TestUtilsAddOns.findRenderedDOMComponentWithTag(otisElevator, 'button');
-			TestUtils.Simulate.click(floorChk);
-			// TODO: Now get direction and check
-			//expect(floorChk.getDOMNode().textContent).toEqual('Direction DN');
+		TestUtils.Simulate.click(floorChk);
+		expect(floorChk.getDOMNode().textContent).toEqual('Toggle Direction (DN)');
 
-			TestUtils.Simulate.click(floorChk);
-			// TODO: Now get direction and check
-			//expect(floorChk.getDOMNode().textContent).toEqual('Direction UP');
+		TestUtils.Simulate.click(floorChk);
+		expect(floorChk.getDOMNode().textContent).toEqual('Toggle Direction (UP)');
 
 	});
 
+	it('Can accept a floor number & move to that floor', function() {
+		var floorSelect = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'select');
+		TestUtils.Simulate.change(floorSelect, { target: { value: '5' } });
+		var floorVal = TestUtilsAddOns.findRenderedDOMComponentWithId(otisElevator, 'elev-floor').value;
+		console.log('%%% ', floorVal);
+		expect(floorVal).toEqual('5');
+	});
 
-	describe("Floor changing movements", function() {
-
-		it('Can accept a floor number', function() {
-			//TODO: Select Control +  on click set the floor number
-		});
-
-		it('Can move to that floor', function() {
-			//TODO: read value of floor value indicator
-		});
-
-		it('Can mantain a list of floor numbers', function() {
+	it('Can maintain a list of floor numbers', function() {
 			//TODO: Return list of floors
-		});
-
-		it('Can move through the floors', function() {
-			//TODO:
-		});
-
 	});
 
 	it('Can reverse direction when it reaches the top etc.', function() {
