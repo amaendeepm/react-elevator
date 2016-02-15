@@ -1,43 +1,71 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const merge = require('webpack-merge');
+const webpack = require('webpack');
+const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
-var path = require('path');
-var webpack = require('webpack');
+const TARGET = process.env.npm_lifecycle_event;
+const PATHS = {
+  app: path.join(__dirname, 'app'),
+  build: path.join(__dirname, 'build')
+};
 
-module.exports = {
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server'
-  ],
+process.env.BABEL_ENV = TARGET;
 
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/public/'
+const common = {
+  entry: {
+    app: PATHS.app
   },
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-
+  output: {
+    path: PATHS.build,
+    filename: 'bundle.js'
+  },
   module: {
     loaders: [
-      { test: /\.jsx$/,
-        loader: 'react-hot!babel',
-        include: path.join(__dirname, 'script') },
-      { test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/ },
-      { test: /\.scss?$/,
-        loader: 'style!css!sass',
-        include: path.join(__dirname, 'css') },
-      { test: /\.css$/,
-        loader: 'style!css' }
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+        include: PATHS.app
+      },
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel?cacheDirectory'],
+        include: PATHS.app
+      }
     ]
   }
+};
+
+if(TARGET === 'start' || !TARGET) {
+  module.exports = merge(common, {
+    devtool: 'eval-source-map',
+    devServer: {
+      contentBase: PATHS.build,
+
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true,
+
+      // display only errors to reduce the amount of output
+      stats: 'errors-only',
+
+      // parse host and port from env so this is easy
+      // to customize
+      host: process.env.HOST,
+      port: process.env.PORT
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new NpmInstallPlugin({
+        save: true // --save
+      })
+    ]
+  });
+}
+
+if(TARGET === 'build') {
+  module.exports = merge(common, {});
 }

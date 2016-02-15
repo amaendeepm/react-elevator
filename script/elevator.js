@@ -1,6 +1,8 @@
+/** @jsx React.DOM */
 'use strict';
 
 var React = require('react/addons');
+var ReactDOM = require('react-dom');
 
 var ElevatorFloorIndicator = React.createClass({
   render : function(){
@@ -24,14 +26,6 @@ var Elevator = React.createClass({
 
 
   setFloorList : function() {   },
-
-  goFloor : function(fval) {
-    this.state.floor = fval
-  },
-
-  getFloor : function() {
-    return this.state.floor
-  },
 
   setFloor : function(obj) {
     var toFloor = document.getElementById("flrSlct").value;
@@ -66,5 +60,4 @@ var Elevator = React.createClass({
   }
 });
 
-module.exports = ElevatorFloorIndicator;
-module.exports = Elevator;
+ReactDOM.render(<Elevator/>, document.getElementById("root"))
