@@ -2,29 +2,31 @@ jest.dontMock('../script/elevator.js');
 
 describe('ElevatorTest', function() {
 
-var otisElevator,TestUtils;
+var React, Elevator, otisElevator,TestUtils, TestUtilsAddOns;
 
   beforeEach(function() {
-	    var React = require('react/addons');
-		var Elevator = require('../script/elevator.js');
+	    React = require('react/addons');
+		Elevator = require('../script/elevator.js');
 		TestUtils = require('react-addons-test-utils');
-    	//otisElevator = TestUtils.renderIntoDocument(<Elevator/>);
+		TestUtilsAddOns = require('react-testutils-additions');
+    	otisElevator = TestUtils.renderIntoDocument(<Elevator/>);
   });
 
-  it('can create an Elevator', function() {
-  	otisElevator = TestUtils.renderIntoDocument(<Elevator/>);
-  	expect(TestUtils.isCompositeComponent(otisElevator)).toBeTruthy();
-  });
 
-  it('checks initial elevator rendered with direction UP', function() {
+
+  it('checks initial elevator rendered with direction', function() {
+	  	//Check if sub-component toggle direction button is rendered
 		var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
     	expect(floorChk.getDOMNode().textContent).toEqual('Toggle Direction');
 	});
 
    it('Can change direction', function() {
 
-			var floorChk = TestUtils.findRenderedDOMComponentWithTag(otisElevator, 'button');
+			var elevator = TestUtilsAddOns.renderIntoDocument(<Elevator/>);
+			var dirLabel = TestUtilsAddOns.findRenderedDOMComponentWithId(elevator, "elev-direction").htmlFor;
 
+			console.log('**************' + dirLabel);
+			var floorChk = TestUtilsAddOns.findRenderedDOMComponentWithTag(otisElevator, 'button');
 			TestUtils.Simulate.click(floorChk);
 			// TODO: Now get direction and check
 			//expect(floorChk.getDOMNode().textContent).toEqual('Direction DN');

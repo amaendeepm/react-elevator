@@ -1,54 +1,13 @@
 'use strict';
 
 var React = require('react/addons');
-var $ = require ('jquery');
-
-var ElevatorDirectionControl = React.createClass({
-
-  render : function(){
-    return(
-      <div id="directionToggle">
-        <button onClick ={this.props.localHandleClick}>Direction {this.props.localDir}</button>
-      </div>
-    );
-  }
-})
-
-var ElevatorFloorSelector = React.createClass({
-
-    componentDidMount: function() {
-        //alert('1');
-        var $selectContainer = $(this.refs.selectContainer.getDOMNode());
-        var $select = $('<select/>');//.prop('change',{this.props.onChange});
-
-        var html = '';
-          for (var i = 0, len = this.props.localFloorList.length; i < len; ++i) {
-            html += '<option value="' + this.props.localFloorList[i] + '">' + this.props.localFloorList[i] + '</option>';
-          }
-        $select.append(html);
-        $selectContainer.append($select);
-    },
-
-    onChange: function (event) {
-      //alert('רר');
-      this.props.onChange();
-    },
-
-    render: function() {
-        return (
-            <div>
-                {this.props.text}:<div ref="selectContainer"></div>
-            </div>
-        );
-    }
-})
-
 
 var ElevatorFloorIndicator = React.createClass({
   render : function(){
-    return <div>Floor:<div id="floorNum"><label>{this.props.localCounter}</label></div></div>
+    return <label id="elev-floor" htmlFor={this.props.localCounter}>{this.props.localCounter}</label>
   }
-})
+});
+
 
 
 var Elevator = React.createClass({
@@ -74,36 +33,38 @@ var Elevator = React.createClass({
     return this.state.floor
   },
 
-  setFloor : function() {
-	  alert('came here to set Floor');
+  setFloor : function(obj) {
+    var toFloor = document.getElementById("flrSlct").value;
+    if(toFloor === this.state.floorList[0] || toFloor > this.state.floor)
+      this.state.direction = 'UP';
+    else if(toFloor == this.state.floorList[this.state.floorList.length-1] || toFloor < this.state.floor)
+      this.state.direction = 'DN';
+	  this.state.floor = toFloor;
+	  this.forceUpdate();
   },
 
 
   getInitialState : function(){
-    return { floor: 0, direction: 'UP', floorList:[1,2,3,4,5,6,7,8,9,10] };
-  },
-
-  handleUp : function(){
-    this.setState( {floor: this.state.floor+1})
-  },
-
-  handleDn : function(){
-    this.setState( {floor: this.state.floor-1})
+    return { floor: 0, direction: 'UP', floorList:[0,1,2,3,4,5,6,7,8,9,10] };
   },
 
   render : function(){
+    var floorData     = this.state.floorList,
+            floorOption = function(X) {
+                return <option>{X}</option>;
+            };
     return(
-    <div>
-      <label> --Elevator-- </label>
-      <ElevatorDirectionControl localHandleClick={this.changeDirection} localDir={this.state.direction}/>
-      <ElevatorFloorIndicator localCounter={this.state.floor}/>
-      <ElevatorFloorSelector text="Pick Floor" onChange={this.setFloor} localSelected={this.state.floor} localFloorList={this.state.floorList}/>
+    <div id="elevator" data-floor={this.state.floor} data-direction={this.state.direction}>
+      <label>--Elevator--</label><br/>
+      Direction:<label id="elev-direction" htmlFor={this.state.direction}>{this.state.direction}</label><br/>
+      <button onClick ={this.changeDirection}>Toggle Direction</button><br/>
+      Current Floor:<ElevatorFloorIndicator localCounter={this.state.floor}/><br/>
+      (3) Goto Floor <select id="flrSlct" onChange={this.setFloor}>{floorData.map(floorOption)}</select><br/>
+      (4) Set Valid Floors (Multi-Select)<br/>
     </div>
     )
   }
-})
+});
 
-module.exports = ElevatorDirectionControl;
 module.exports = ElevatorFloorIndicator;
-module.exports = ElevatorFloorSelector;
 module.exports = Elevator;
