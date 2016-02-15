@@ -30,23 +30,29 @@ changeDirection : function() {
 	  },
 
 setFloor : function(e) {
-	console.log(e.target.value);
+
+
+	console.log('To= '+e.target.value + ' At= ' + this.state.floor );
 	
-	var toFloor = e.target.value;
+	var toFloor = e.target.value || this.state.floor;
+	toFloor = parseInt(toFloor);
+	var atNow  = parseInt(this.state.floor);
 	
-	/*
-	if(toFloor > this.state.floor)
+	if(toFloor > atNow) {
 		this.state.direction = 'UP';
-	else if(toFloor < this.state.floor)
+	}
+	else if(toFloor < atNow) {
 		this.state.direction = 'DN';
-	*/
+	}
 	
-	if(toFloor === this.state.floorList[0])
+	//Boundary Check to Toggle direction
+	if(toFloor === parseInt(this.state.floorList[0]))
 		this.state.direction = 'UP';
-	else if(toFloor === this.state.floorList[this.state.floorList.length-1])
+	else if(toFloor === parseInt(this.state.floorList[this.state.floorList.length-1]))
 		this.state.direction = 'DN';
 		
 	this.state.floor = toFloor;
+	console.log('Final direction ... ' + this.state.direction);
   	this.forceUpdate();
 },
 
