@@ -1,71 +1,26 @@
-const path = require('path');
-const merge = require('webpack-merge');
-const webpack = require('webpack');
-const NpmInstallPlugin = require('npm-install-webpack-plugin');
-
-const TARGET = process.env.npm_lifecycle_event;
-const PATHS = {
-  app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build')
-};
-
-process.env.BABEL_ENV = TARGET;
-
-const common = {
-  entry: {
-    app: PATHS.app
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
-  output: {
-    path: PATHS.build,
-    filename: 'bundle.js'
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-        include: PATHS.app
-      },
-      {
-        test: /\.jsx?$/,
-        loaders: ['babel?cacheDirectory'],
-        include: PATHS.app
-      }
-    ]
-  }
-};
-
-if(TARGET === 'start' || !TARGET) {
-  module.exports = merge(common, {
-    devtool: 'eval-source-map',
-    devServer: {
-      contentBase: PATHS.build,
-
-      historyApiFallback: true,
-      hot: true,
-      inline: true,
-      progress: true,
-
-      // display only errors to reduce the amount of output
-      stats: 'errors-only',
-
-      // parse host and port from env so this is easy
-      // to customize
-      host: process.env.HOST,
-      port: process.env.PORT
+module.exports = {
+    entry: './app.jsx',
+    output: {
+        filename: 'bundle.js', //this is the default name, so you can skip it
+        //at this directory our bundle file will be available
+        //make sure port 8090 is used when launching webpack-dev-server
+        publicPath: 'http://localhost:8090/assets'
     },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new NpmInstallPlugin({
-        save: true // --save
-      })
-    ]
-  });
-}
-
-if(TARGET === 'build') {
-  module.exports = merge(common, {});
+    module: {
+        loaders: [
+            {
+                //tell webpack to use jsx-loader for all *.jsx files
+                test: /\.jsx$/,
+                loader: 'jsx-loader?insertPragma=React.DOM&harmony'
+            }
+        ]
+    },
+    externals: {
+        //don't bundle the 'react' npm package with our bundle.js
+        //but get it from a global 'React' variable
+        'react': 'React'
+    },
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    }
 }
